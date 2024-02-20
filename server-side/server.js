@@ -1,10 +1,8 @@
 import 'dotenv/config'
-import express from 'express'
 import mongoose from 'mongoose'
+import app from './app.js'
 
-const app = express()
-const port = process.env.PORT
-
+// DATABASE
 mongoose.connect(process.env.CONN_STR, {
 }).then((conn) => {
     console.log("DB Connected Successfully")
@@ -12,7 +10,8 @@ mongoose.connect(process.env.CONN_STR, {
     console.log(error)
 });
 
-
+// SERVER
+const port = process.env.PORT
 app.listen(port, () => {
     console.log(`Server listening on port ${port}!`);
 })
