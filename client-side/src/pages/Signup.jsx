@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 const Signup = () => {
   const [formData, setFormData] = useState({})
   const [error, setError] = useState(false)
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   const handleChange = (event) => {
     setFormData({...formData, [event.target.id]: event.target.value})
@@ -31,11 +32,11 @@ const Signup = () => {
       } else (
         setSuccess(true)
       )
+      navigate("/sign-in")
     } catch (err) {
       setLoading(false)
       setError(true)
     }
-
   }
 
   return (
