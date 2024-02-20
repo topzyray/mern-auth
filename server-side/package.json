@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon api/server.js",
-    "start": "node api/server.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "author": "Tope Taiwo",
   "license": "ISC",
