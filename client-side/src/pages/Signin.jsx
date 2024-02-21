@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { signInStart, signInSuccess, signInFailure } from '../redux/features/user/userSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Signin = () => {
   const [formData, setFormData] = useState({})
-  const [error, setError] = useState(false)
-  const [success, setSuccess] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const { loading, error } = useSelector(state => state.user)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleChange = (event) => {
     setFormData({...formData, [event.target.id]: event.target.value})
@@ -15,8 +16,7 @@ const Signin = () => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     try {
-      setLoading(true)
-      setError(false)
+      dispatch(signInStart())
       const response = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -25,17 +25,14 @@ const Signin = () => {
         body: JSON.stringify(formData)
       })
       const data = await response.json()
-      setLoading(false)
       if (data.success === false) {
-        setError(true)
+        dispatch(signInFailure(data.error))
         return
-      } else (
-        setSuccess(true)
-      )
+      }
+      dispatch(signInSuccess(data))
       navigate("/")
     } catch (err) {
-      setLoading(false)
-      setError(true)
+      dispatch(signInFailure(err.message))
     }
 
   }
@@ -43,8 +40,8 @@ const Signin = () => {
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Signin</h1>
-      <p className='text-red-500 pb-4'>{error && "Something went wrong"}</p>
-      <p className='text-green-600 pb-4'>{success && "Success"}</p>
+      <p className='text-red-500 pb-4'>{error ? error || "Something went wrong" : ""}</p>
+      {/* <p className='text-green-600 pb-4'>{success && "Success"}</p> */}
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input type="email" placeholder="Email" id="email" className="bg-slate-100 p-3 rounded-lg" onChange={handleChange} />
         <input type="password" placeholder="Password" id="password" className="bg-slate-100 p-3 rounded-lg" onChange={handleChange} />
