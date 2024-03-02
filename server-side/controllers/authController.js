@@ -71,7 +71,7 @@ export const google = async (req, res, next) => {
                 .json({
                     success: true,
                     data: {
-                        user: rest
+                        validUser: rest
                     }
                 })
         }
