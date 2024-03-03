@@ -3,10 +3,9 @@ import { useSelector } from "react-redux"
 
 const Header = () => {
   const { currentUser } = useSelector(state => state.user)
-  console.log(currentUser);
   return (
     <div className='bg-slate-200'>
-      <div className='flex justify-between items-center max-w-6xl mx-auto px-0 py-5'>
+      <div className='flex justify-between items-center max-w-6xl mx-auto px-5 py-5'>
         <NavLink to='/'>
           <h1 className='font-bold'>Auth App</h1>
         </NavLink>
