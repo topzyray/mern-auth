@@ -10,6 +10,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    // Signin user reducers
     signInStart: (state) => {
       state.loading = true;
     },
@@ -22,6 +23,8 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+
+    // Update user reducers
     updateUserStart: (state) => {
       state.loading = true;
     },
@@ -34,6 +37,8 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+
+    // Delete user reducers
     deleteUserStart: (state) => {
       state.loading = true;
     },
@@ -46,7 +51,13 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    
+
+    // Signout reducer
+    signOut: (state) => {
+      state.currentUser = null;
+      state.loading = false;
+      state.error = false;
+    },
   },
 });
 
@@ -59,7 +70,8 @@ export const {
   updateUserFailure,
   deleteUserStart,
   deleteUserSuccess,
-  deleteUserFailure
+  deleteUserFailure,
+  signOut,
 } = userSlice.actions;
 
 export default userSlice.reducer;
